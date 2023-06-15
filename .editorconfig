@@ -21,6 +21,7 @@ insert_final_newline = true
 
 [*.cs]
 indent_size = 4
+tab_width = 4
 dotnet_sort_system_directives_first = true
 
 # Don't use this. qualifier
@@ -33,10 +34,10 @@ dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
 # use int.MaxValue over Int32.MaxValue
 dotnet_style_predefined_type_for_member_access = true:suggestion
 
-# Require var all the time.
-csharp_style_var_for_built_in_types = true:suggestion
-csharp_style_var_when_type_is_apparent = true:suggestion
-csharp_style_var_elsewhere = true:suggestion
+# Use explicit all the time.
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = false:suggestion
+csharp_style_var_elsewhere = false:suggestion
 
 # Disallow throw expressions.
 csharp_style_throw_expression = false:suggestion
@@ -54,6 +55,8 @@ csharp_style_namespace_declarations = file_scoped
 
 # Brace settings
 csharp_prefer_braces = true # Prefer curly braces even for one line of code
+csharp_preserve_single_line_statements = false
+csharp_preserve_single_line_blocks = false
 
 [*.{xml,config,*proj,nuspec,props,resx,targets,yml,tasks}]
 indent_size = 2
@@ -305,12 +308,8 @@ dotnet_diagnostic.IDE0060.severity = warning
 # IDE0062: Make local function static
 dotnet_diagnostic.IDE0062.severity = warning
 
-# IDE0073: File header
-dotnet_diagnostic.IDE0073.severity = warning
-file_header_template = Licensed to the .NET Foundation under one or more agreements.\nThe .NET Foundation licenses this file to you under the MIT license.
-
 # IDE0161: Convert to file-scoped namespace
-dotnet_diagnostic.IDE0161.severity = warning
+dotnet_diagnostic.IDE0161.severity = suggestion
 
 # IDE0200: Lambda expression can be removed
 dotnet_diagnostic.IDE0200.severity = warning
@@ -441,3 +440,87 @@ dotnet_diagnostic.IDE0161.severity = silent
 [{**/Shared/**.cs,**/microsoft.extensions.hostfactoryresolver.sources/**.{cs,vb}}]
 # IDE0005: Remove unused usings. Ignore for shared src files since imports for those depend on the projects in which they are included.
 dotnet_diagnostic.IDE0005.severity = silent
+[*.{cs,vb}]
+#### Naming styles ####
+
+# Naming rules
+
+dotnet_naming_rule.interface_should_be_begins_with_i.severity = warning
+dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface
+dotnet_naming_rule.interface_should_be_begins_with_i.style = begins_with_i
+
+dotnet_naming_rule.types_should_be_pascal_case.severity = warning
+dotnet_naming_rule.types_should_be_pascal_case.symbols = types
+dotnet_naming_rule.types_should_be_pascal_case.style = pascal_case
+
+dotnet_naming_rule.non_field_members_should_be_pascal_case.severity = warning
+dotnet_naming_rule.non_field_members_should_be_pascal_case.symbols = non_field_members
+dotnet_naming_rule.non_field_members_should_be_pascal_case.style = pascal_case
+
+dotnet_naming_rule.public_field_rule.severity = warning
+dotnet_naming_rule.public_field_rule.symbols = public_field
+dotnet_naming_rule.public_field_rule.style = pascal_case
+
+dotnet_naming_rule.private_constants_rule.severity = warning
+dotnet_naming_rule.private_constants_rule.symbols = private_constants_field
+dotnet_naming_rule.private_constants_rule.style = pascal_case
+
+dotnet_naming_rule.private_static_readonly_rule.severity = warning
+dotnet_naming_rule.private_static_readonly_rule.symbols = private_static_readonly_field
+dotnet_naming_rule.private_static_readonly_rule.style = underscore_camel_case
+
+dotnet_naming_rule.private_field_rule.severity = warning
+dotnet_naming_rule.private_field_rule.symbols = private_field
+dotnet_naming_rule.private_field_rule.style = underscore_camel_case
+
+# Symbol specifications
+
+dotnet_naming_symbols.interface.applicable_kinds = interface
+dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+dotnet_naming_symbols.interface.required_modifiers =
+
+dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
+dotnet_naming_symbols.types.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+dotnet_naming_symbols.types.required_modifiers =
+
+dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, method
+dotnet_naming_symbols.non_field_members.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+dotnet_naming_symbols.non_field_members.required_modifiers =
+
+dotnet_naming_symbols.public_field.applicable_accessibilities = public
+dotnet_naming_symbols.public_field.applicable_kinds = field
+dotnet_naming_symbols.public_field.required_modifiers =
+
+dotnet_naming_symbols.private_constants_field.applicable_accessibilities = private
+dotnet_naming_symbols.private_constants_field.applicable_kinds = field
+dotnet_naming_symbols.private_constants_field.required_modifiers = const
+
+dotnet_naming_symbols.private_static_readonly_field.applicable_accessibilities = private
+dotnet_naming_symbols.private_static_readonly_field.applicable_kinds = field
+dotnet_naming_symbols.private_static_readonly_field.required_modifiers = static, readonly
+
+dotnet_naming_symbols.private_field.applicable_accessibilities = private
+dotnet_naming_symbols.private_field.applicable_kinds = field
+dotnet_naming_symbols.private_field.required_modifiers =
+
+# Naming styles
+
+dotnet_naming_style.begins_with_i.required_prefix = I
+dotnet_naming_style.begins_with_i.required_suffix =
+dotnet_naming_style.begins_with_i.word_separator =
+dotnet_naming_style.begins_with_i.capitalization = pascal_case
+
+dotnet_naming_style.pascal_case.required_prefix =
+dotnet_naming_style.pascal_case.required_suffix =
+dotnet_naming_style.pascal_case.word_separator =
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+
+dotnet_naming_style.camel_case.required_prefix =
+dotnet_naming_style.camel_case.required_suffix =
+dotnet_naming_style.camel_case.word_separator =
+dotnet_naming_style.camel_case.capitalization = camel_case
+
+dotnet_naming_style.underscore_camel_case.required_prefix = _
+dotnet_naming_style.underscore_camel_case.required_suffix =
+dotnet_naming_style.underscore_camel_case.word_separator =
+dotnet_naming_style.underscore_camel_case.capitalization = camel_case
